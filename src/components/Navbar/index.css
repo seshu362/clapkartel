@@ -1,0 +1,254 @@
+/* ==================== NAVBAR STYLES ==================== */
+
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 80px;
+  padding-right: 80px;
+  margin-bottom: 12px;
+  height: 36px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background-color: #EFEFEF;
+  color: #1D1D1D;
+  font-family: 'Sen', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 130%;
+}
+
+.navbar-left-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-right-menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-left-menu li,
+.navbar-right-menu li {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-left-menu li:hover,
+.navbar-right-menu li:hover {
+  color: #5D4000;
+  transform: translateY(-1px);
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+
+/* Large Desktop - No changes needed (1440px and above) */
+
+/* Medium Desktop / Small Desktop */
+@media (max-width: 1280px) {
+  .navbar-container {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 35px;
+  }
+}
+
+/* Laptop / Large Tablet Landscape */
+@media (max-width: 1024px) {
+  .navbar-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 28px;
+    font-size: 13px;
+  }
+}
+
+/* Tablet Landscape (iPad Pro, iPad Air) */
+@media (max-width: 900px) {
+  .navbar-container {
+    padding-left: 30px;
+    padding-right: 30px;
+    height: auto;
+    min-height: 36px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 20px;
+    font-size: 13px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    white-space: nowrap;
+  }
+}
+
+/* Tablet Portrait (iPad, Surface) */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    padding: 16px 24px;
+    height: auto;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 18px;
+    font-size: 13px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 8px 14px;
+    background-color: #E0E0E0;
+    border-radius: 6px;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .navbar-left-menu li:active,
+  .navbar-right-menu li:active {
+    background-color: #D0D0D0;
+    transform: scale(0.97);
+  }
+}
+
+/* Small Tablet / Large Mobile Landscape */
+@media (max-width: 640px) {
+  .navbar-container {
+    padding: 14px 20px;
+    gap: 14px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 12px;
+    font-size: 12px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 8px 12px;
+    border-radius: 5px;
+  }
+}
+
+/* Large Mobile (iPhone 14 Pro Max, Pixel 7 Pro) */
+@media (max-width: 540px) {
+  .navbar-container {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 10px;
+    font-size: 11.5px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 7px 11px;
+  }
+}
+
+/* Standard Mobile (iPhone 14, Samsung Galaxy S23) */
+@media (max-width: 430px) {
+  .navbar-container {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 8px;
+    font-size: 11px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 7px 10px;
+    border-radius: 4px;
+  }
+}
+
+/* Medium Mobile (iPhone SE, iPhone 12/13 mini) */
+@media (max-width: 390px) {
+  .navbar-container {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 7px;
+    font-size: 10.5px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 6px 9px;
+  }
+}
+
+/* Small Mobile (iPhone SE 1st gen, small Android phones) */
+@media (max-width: 375px) {
+  .navbar-container {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 6px;
+    font-size: 10px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 6px 8px;
+  }
+}
+
+/* Extra Small Mobile (Very old or compact devices) */
+@media (max-width: 320px) {
+  .navbar-container {
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .navbar-left-menu,
+  .navbar-right-menu {
+    gap: 5px;
+    font-size: 9px;
+  }
+
+  .navbar-left-menu li,
+  .navbar-right-menu li {
+    padding: 5px 7px;
+  }
+}

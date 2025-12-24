@@ -1,0 +1,152 @@
+/* Footer Container */
+.footer-container {
+  margin-top: 112px;
+  margin-bottom: 112px;
+}
+
+/* Logo Section */
+.footer-logo-section {
+  display: flex;
+  align-items: center;
+  margin-left: 90px;
+  margin-right: 90px;
+  margin-top: 72px;
+  margin-bottom: 72px;
+}
+
+.footer-divider-line {
+  flex-grow: 1;
+  border-top: 1px solid #d1d5db;
+}
+
+.footer-logo {
+  height: 40px;
+  width: auto;
+  max-width: 280px;
+  object-fit: contain;
+}
+
+/* Social Icons Section */
+.footer-social-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.footer-social-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 8.333333%;
+}
+
+.footer-icon {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  opacity: 0.68;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-icon:hover {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Footer Text Section */
+.footer-text-section {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.footer-terms-text {
+  color: #9ca3af;
+  text-align: center;
+  font-size: 12px;
+  font-family: sans-serif;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.footer-copyright-text {
+  color: #9ca3af;
+  text-align: center;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footer-logo-section {
+    margin-left: 80px;
+    margin-right: 80px;
+  }
+
+  .footer-social-icons {
+    width: 15%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    margin-top: 80px;
+    margin-bottom: 80px;
+  }
+
+  .footer-logo-section {
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-logo {
+    height: 32px;
+    max-width: 220px;
+  }
+
+  .footer-social-icons {
+    width: 25%;
+  }
+
+  .footer-terms-text {
+    font-size: 11px;
+  }
+
+  .footer-copyright-text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .footer-logo-section {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 36px;
+    margin-bottom: 36px;
+  }
+
+  .footer-logo {
+    height: 28px;
+    max-width: 180px;
+  }
+
+  .footer-social-icons {
+    width: 50%;
+  }
+
+  .footer-terms-text {
+    font-size: 10px;
+    padding: 0 10px;
+  }
+
+  .footer-copyright-text {
+    font-size: 11px;
+    padding: 0 10px;
+  }
+}

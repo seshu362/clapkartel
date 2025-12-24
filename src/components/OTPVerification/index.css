@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Sen:wght@400;500;600;700&display=swap');
+
+/* OTP Input Container */
+.otp-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.otp-input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Sen', sans-serif;
+    border: 2px solid #e2e2e2;
+    border-radius: 10px;
+    background-color: #F8F9FB;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.otp-input:focus {
+    border-color: #bf8906;
+    box-shadow: 0 0 0 3px rgba(191, 137, 6, 0.15);
+    background-color: #ffffff;
+}
+
+.otp-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Resend Button */
+.resend-button:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .otp-container {
+        gap: 8px;
+    }
+
+    .otp-input {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}

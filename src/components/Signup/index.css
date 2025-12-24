@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Sen:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.clapkart-signup-auth-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Left Side */
+.clapkart-signup-auth-left {
+  width: 58%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  /* background image is applied inline to avoid webpack url resolution */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  overflow: hidden;
+}
+
+.clapkart-signup-clap-kartel-logo {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  height: 45px;
+  width: auto;
+  max-width: 300px;
+  object-fit: contain;
+}
+
+.clapkart-signup-movie-image {
+  display: none;
+}
+
+/* Right Side */
+.clapkart-signup-auth-right {
+  width: 42%;
+  background-color: #ffffff;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.clapkart-signup-auth-form-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 32px 32px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.clapkart-signup-logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.clapkart-signup-form-logo {
+  height: 90px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.clapkart-signup-auth-title {
+  color: #232323;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Sen, sans-serif;
+  font-size: 37px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 110%;
+  /* 40.7px */
+  letter-spacing: -1.48px;
+  margin-bottom: 6px;
+}
+
+.clapkart-signup-auth-subtitle {
+  color: #969696;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Sen, sans-serif;
+  font-size: 16.736px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  /* 25.105px */
+  margin-bottom: 22px;
+}
+
+.clapkart-signup-auth-form {
+  width: 100%;
+}
+
+.clapkart-signup-form-group {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.clapkart-signup-form-label {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  padding: 0 8px;
+  background: #ffffff;
+  color: #B6810D;
+  /* default for Phone, Email, Select */
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Sen, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  /* 21px */
+}
+
+/* Active state label color, e.g., when input/select focused (Full Name requirement) */
+.clapkart-signup-form-group:focus-within .clapkart-signup-form-label {
+  color: #B6810D;
+}
+
+.clapkart-signup-form-input,
+.clapkart-signup-form-select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  font-family: Sen, sans-serif;
+  font-size: 16.736px;
+  /* input text size like example name */
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  /* 25.105px */
+  border: 1.5px solid #e2e2e2;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+  color: #232323;
+}
+
+.clapkart-signup-form-input:focus,
+.clapkart-signup-form-select:focus {
+  border-color: #bf8906;
+  box-shadow: 0 0 0 3px rgba(191, 137, 6, 0.15);
+}
+
+.clapkart-signup-form-input::placeholder {
+  color: #9ca3af;
+}
+
+.clapkart-signup-form-select {
+  color: #6b7280;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.clapkart-signup-terms-group {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 6px;
+  margin-bottom: 18px;
+}
+
+/* Replace the existing terms-checkbox styles with these */
+.clapkart-signup-terms-checkbox {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  appearance: none;
+  border-radius: 3px;
+  border: 1.5px solid #B6810D;
+  background: #FFF;
+  position: relative;
+}
+
+.clapkart-signup-terms-checkbox:checked {
+  background-color: #FFF;
+  border-color: #B6810D;
+}
+
+.clapkart-signup-terms-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 10px;
+  border: solid #B6810D;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.clapkart-signup-terms-checkbox:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(182, 129, 13, 0.2);
+}
+
+.clapkart-signup-terms-label {
+  color: #0A0A0A;
+  text-align: justify;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Sen, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.clapkart-signup-terms-link {
+  color: #B6810D;
+  font-feature-settings: 'liga' off, 'clig' off;
+  font-family: Sen, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.3px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  cursor: pointer;
+}
+
+.clapkart-signup-terms-link:hover {
+  text-decoration: underline;
+}
+
+.clapkart-signup-submit-button {
+  width: 100%;
+  height: 44px;
+  background-color: #bf8906;
+  color: #FFF;
+  font-family: Sen, sans-serif;
+  font-size: 16.736px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  /* 20.084px */
+  letter-spacing: -0.167px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.clapkart-signup-submit-button:hover {
+  opacity: 0.9;
+}
+
+.clapkart-signup-auth-footer {
+  text-align: center;
+  margin-top: auto;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.clapkart-signup-footer-text {
+  font-size: 14px;
+  color: #666;
+}
+
+.clapkart-signup-footer-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #BF8906;
+  text-decoration: none;
+}
+
+.clapkart-signup-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Error styles */
+.clapkart-signup-form-input.clapkart-signup-error,
+.clapkart-signup-form-select.clapkart-signup-error {
+  border-color: #dc3545;
+}
+
+.clapkart-signup-error-text {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.clapkart-signup-terms-error {
+  margin-top: -12px;
+  margin-bottom: 12px;
+  text-align: left;
+  padding-left: 24px;
+}
+
+.clapkart-signup-error-message {
+  background-color: #fff3f3;
+  border: 1px solid #dc3545;
+  border-radius: 4px;
+  padding: 8px;
+  margin-top: 12px;
+  text-align: center;
+  color: #dc3545;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .clapkart-signup-auth-left {
+    display: none;
+  }
+
+  .clapkart-signup-auth-right {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .clapkart-signup-auth-right {
+    padding: 20px 16px;
+  }
+
+  .clapkart-signup-auth-form-container {
+    max-width: 100%;
+  }
+
+  .clapkart-signup-form-logo {
+    height: 100px;
+  }
+
+  .clapkart-signup-auth-title {
+    font-size: 28px;
+  }
+
+  .clapkart-signup-logo-container {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clapkart-signup-auth-title {
+    font-size: 24px;
+  }
+
+  .clapkart-signup-form-logo {
+    height: 90px;
+  }
+
+  .clapkart-signup-terms-label {
+    font-size: 11px;
+  }
+}
+
+
+.clapkart-signup-resend-button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: transparent;
+  color: #5D4000;
+  border: 1px solid #5D4000;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clapkart-signup-resend-button:hover:not(:disabled) {
+  background-color: #5D4000;
+  color: white;
+}
+
+.clapkart-signup-resend-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
