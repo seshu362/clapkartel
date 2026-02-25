@@ -11,6 +11,53 @@
 }
 
 /* ============================================ */
+/* BREADCRUMB NAVIGATION */
+/* ============================================ */
+
+.breadcrumb-container {
+    width: 90%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px 0 30px;
+}
+
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Sen", sans-serif;
+    margin-bottom: 8px;
+}
+
+.breadcrumb-item {
+    font-size: 26px;
+    font-weight: 500;
+    color: #888;
+}
+
+.breadcrumb-link {
+    color: #BF8906;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    text-decoration: underline;
+    color: #a07705;
+}
+
+.breadcrumb-separator {
+    color: #BF8906;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.breadcrumb-current {
+    color: #555;
+    font-weight: 600;
+}
+
+/* ============================================ */
 /* FILTER SECTION */
 /* ============================================ */
 

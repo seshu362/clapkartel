@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import VideoCarousel from '../VideoCarousel';
+import Carousel from '../Carousel';
 import './index.css';
 
 const SubCategoryUsersPage = () => {
@@ -445,189 +447,208 @@ const SubCategoryUsersPage = () => {
     }
 
     return (
-        <div className="subcat-users-page">
-            {/* Title with Breadcrumb Navigation */}
-            <h1 className="subcat-title">
-                <div className="breadcrumb-nav">
-                    <span
-                        className="breadcrumb-item breadcrumb-link"
-                        onClick={() => navigate(sourcePage || '/craft')}
-                    >
-                        {categoryName || '24 Crafts'}
-                    </span>
-                    <span className="breadcrumb-separator">→</span>
-                    <span className="breadcrumb-item breadcrumb-current">
-                        {subcategoryInfo.name}
-                    </span>
-                </div>
-            </h1>
-
-            {subcategoryInfo.description && (
-                <p className="subcat-description">{subcategoryInfo.description}</p>
-            )}
-
-            {/* Filter Section */}
-            <div className="subcat-filter-section">
-                <div className="subcat-filter-container">
-                    {/* Country Filter */}
-                    <div className="subcat-filter-item">
-                        <div className="subcat-search-input-wrapper">
-                            <input
-                                type="text"
-                                className="subcat-filter-search-input"
-                                placeholder={loadingCountries ? 'Loading Countries...' : 'Search Country'}
-                                value={countrySearch}
-                                onChange={handleCountrySearchChange}
-                                onFocus={() => setShowCountryDropdown(true)}
-                                disabled={loadingCountries}
-                            />
-                            {showCountryDropdown && filteredCountries.length > 0 && (
-                                <div className="subcat-search-dropdown">
-                                    {filteredCountries.map((country) => (
-                                        <div
-                                            key={country.id}
-                                            className="subcat-dropdown-item"
-                                            onClick={() => handleCountrySelect(country)}
-                                        >
-                                            {country.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* State Filter */}
-                    <div className="subcat-filter-item">
-                        <div className="subcat-search-input-wrapper">
-                            <input
-                                type="text"
-                                className="subcat-filter-search-input"
-                                placeholder={
-                                    !selectedCountry
-                                        ? 'Select Country First'
-                                        : loadingStates
-                                            ? 'Loading States...'
-                                            : 'Search State'
-                                }
-                                value={stateSearch}
-                                onChange={handleStateSearchChange}
-                                onFocus={() => setShowStateDropdown(true)}
-                                disabled={!selectedCountry || loadingStates}
-                            />
-                            {showStateDropdown && filteredStates.length > 0 && (
-                                <div className="subcat-search-dropdown">
-                                    {filteredStates.map((state) => (
-                                        <div
-                                            key={state.id}
-                                            className="subcat-dropdown-item"
-                                            onClick={() => handleStateSelect(state)}
-                                        >
-                                            {state.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* City Filter */}
-                    <div className="subcat-filter-item">
-                        <div className="subcat-search-input-wrapper">
-                            <input
-                                type="text"
-                                className="subcat-filter-search-input"
-                                placeholder={
-                                    !selectedState
-                                        ? 'Select State First'
-                                        : loadingCities
-                                            ? 'Loading Cities...'
-                                            : 'Search City'
-                                }
-                                value={citySearch}
-                                onChange={handleCitySearchChange}
-                                onFocus={() => setShowCityDropdown(true)}
-                                disabled={!selectedState || loadingCities}
-                            />
-                            {showCityDropdown && filteredCities.length > 0 && (
-                                <div className="subcat-search-dropdown">
-                                    {filteredCities.map((city) => (
-                                        <div
-                                            key={city.id}
-                                            className="subcat-dropdown-item"
-                                            onClick={() => handleCitySelect(city)}
-                                        >
-                                            {city.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Apply Filters Button */}
-                    {(selectedCountry || selectedState || selectedCity) && (
-                        <button
-                            className="subcat-apply-filters-btn"
-                            onClick={handleApplyFilters}
+        <>
+            {/* Breadcrumb and Description - Constrained Width */}
+            <div className="subcat-users-page">
+                {/* Title with Breadcrumb Navigation */}
+                <h1 className="subcat-title">
+                    <div className="breadcrumb-nav">
+                        <span
+                            className="breadcrumb-item breadcrumb-link"
+                            onClick={() => navigate(sourcePage || '/craft')}
                         >
-                            Apply Filters
-                        </button>
-                    )}
-
-                    {/* Clear Filters Button */}
-                    {(selectedCountry || selectedState || selectedCity) && (
-                        <button
-                            className="subcat-clear-filters-btn"
-                            onClick={handleClearFilters}
+                            {'24 Crafts'}
+                        </span>
+                        <span className="breadcrumb-separator">→</span>
+                        <span
+                            className="breadcrumb-item breadcrumb-link"
+                            onClick={() => navigate('/craft')}
                         >
-                            Clear Filters
-                        </button>
-                    )}
-                </div>
+                            {categoryName || '24 Crafts'}
+                        </span>
+                        <span className="breadcrumb-separator">→</span>
+                        <span className="breadcrumb-item breadcrumb-current">
+                            {subcategoryInfo.name}
+                        </span>
+                    </div>
+                </h1>
+
+                {subcategoryInfo.description && (
+                    <p className="subcat-description">{subcategoryInfo.description}</p>
+                )}
             </div>
 
-            {/* Users Grid */}
-            {filteredUsers.length === 0 ? (
-                <div className="subcat-empty-container">
-                    <p className="subcat-empty-message">
-                        {selectedCountry || selectedState || selectedCity
-                            ? 'No users found matching the selected filters'
-                            : 'No users found in this category'}
-                    </p>
-                </div>
-            ) : (
-                <div className="subcat-users-grid">
-                    {filteredUsers.map((user) => {
-                        const userImgSrc = getUserProfileImageUrl(user.userProfileImage);
+            {/* Video Carousel - Full Width */}
+            <VideoCarousel />
 
-                        return (
-                            <div
-                                key={user.userId}
-                                className="subcat-user-item"
-                                onClick={() => handleUserClick(user)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <div className="subcat-user-image-wrapper">
-                                    <img
-                                        src={userImgSrc}
-                                        alt={user.userName}
-                                        className="subcat-user-image"
-                                        onError={(e) => {
-                                            console.error('Failed to load user image:', userImgSrc);
-                                            e.target.src = 'https://placehold.co/120x120?text=No+Image';
-                                        }}
-                                    />
-                                </div>
-                                <div className="subcat-user-info">
-                                    <p className="subcat-user-name">{toTitleCase(user.userName)}</p>
-                                </div>
+            {/* Carousel Banner - Full Width */}
+            <Carousel />
+
+            {/* Filter Section and Users - Constrained Width */}
+            <div className="subcat-users-page">
+                {/* Filter Section */}
+                <div className="subcat-filter-section">
+                    <div className="subcat-filter-container">
+                        {/* Country Filter */}
+                        <div className="subcat-filter-item">
+                            <div className="subcat-search-input-wrapper">
+                                <input
+                                    type="text"
+                                    className="subcat-filter-search-input"
+                                    placeholder={loadingCountries ? 'Loading Countries...' : 'Search Country'}
+                                    value={countrySearch}
+                                    onChange={handleCountrySearchChange}
+                                    onFocus={() => setShowCountryDropdown(true)}
+                                    disabled={loadingCountries}
+                                />
+                                {showCountryDropdown && filteredCountries.length > 0 && (
+                                    <div className="subcat-search-dropdown">
+                                        {filteredCountries.map((country) => (
+                                            <div
+                                                key={country.id}
+                                                className="subcat-dropdown-item"
+                                                onClick={() => handleCountrySelect(country)}
+                                            >
+                                                {country.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        );
-                    })}
+                        </div>
+
+                        {/* State Filter */}
+                        <div className="subcat-filter-item">
+                            <div className="subcat-search-input-wrapper">
+                                <input
+                                    type="text"
+                                    className="subcat-filter-search-input"
+                                    placeholder={
+                                        !selectedCountry
+                                            ? 'Select Country First'
+                                            : loadingStates
+                                                ? 'Loading States...'
+                                                : 'Search State'
+                                    }
+                                    value={stateSearch}
+                                    onChange={handleStateSearchChange}
+                                    onFocus={() => setShowStateDropdown(true)}
+                                    disabled={!selectedCountry || loadingStates}
+                                />
+                                {showStateDropdown && filteredStates.length > 0 && (
+                                    <div className="subcat-search-dropdown">
+                                        {filteredStates.map((state) => (
+                                            <div
+                                                key={state.id}
+                                                className="subcat-dropdown-item"
+                                                onClick={() => handleStateSelect(state)}
+                                            >
+                                                {state.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* City Filter */}
+                        <div className="subcat-filter-item">
+                            <div className="subcat-search-input-wrapper">
+                                <input
+                                    type="text"
+                                    className="subcat-filter-search-input"
+                                    placeholder={
+                                        !selectedState
+                                            ? 'Select State First'
+                                            : loadingCities
+                                                ? 'Loading Cities...'
+                                                : 'Search City'
+                                    }
+                                    value={citySearch}
+                                    onChange={handleCitySearchChange}
+                                    onFocus={() => setShowCityDropdown(true)}
+                                    disabled={!selectedState || loadingCities}
+                                />
+                                {showCityDropdown && filteredCities.length > 0 && (
+                                    <div className="subcat-search-dropdown">
+                                        {filteredCities.map((city) => (
+                                            <div
+                                                key={city.id}
+                                                className="subcat-dropdown-item"
+                                                onClick={() => handleCitySelect(city)}
+                                            >
+                                                {city.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Apply Filters Button */}
+                        {(selectedCountry || selectedState || selectedCity) && (
+                            <button
+                                className="subcat-apply-filters-btn"
+                                onClick={handleApplyFilters}
+                            >
+                                Apply Filters
+                            </button>
+                        )}
+
+                        {/* Clear Filters Button */}
+                        {(selectedCountry || selectedState || selectedCity) && (
+                            <button
+                                className="subcat-clear-filters-btn"
+                                onClick={handleClearFilters}
+                            >
+                                Clear Filters
+                            </button>
+                        )}
+                    </div>
                 </div>
-            )}
-        </div>
+
+                {/* Users Grid */}
+                {filteredUsers.length === 0 ? (
+                    <div className="subcat-empty-container">
+                        <p className="subcat-empty-message">
+                            {selectedCountry || selectedState || selectedCity
+                                ? 'No users found matching the selected filters'
+                                : 'No users found in this category'}
+                        </p>
+                    </div>
+                ) : (
+                    <div className="subcat-users-grid">
+                        {filteredUsers.map((user) => {
+                            const userImgSrc = getUserProfileImageUrl(user.userProfileImage);
+
+                            return (
+                                <div
+                                    key={user.userId}
+                                    className="subcat-user-item"
+                                    onClick={() => handleUserClick(user)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="subcat-user-image-wrapper">
+                                        <img
+                                            src={userImgSrc}
+                                            alt={user.userName}
+                                            className="subcat-user-image"
+                                            onError={(e) => {
+                                                console.error('Failed to load user image:', userImgSrc);
+                                                e.target.src = 'https://placehold.co/120x120?text=No+Image';
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="subcat-user-info">
+                                        <p className="subcat-user-name">{toTitleCase(user.userName)}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+        </>
     );
 };
 

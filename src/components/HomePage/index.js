@@ -200,11 +200,15 @@ const HomePage = () => {
     }
   };
 
-  // Handle craft item click
+  // Handle craft item click - Navigate to detail page for ALL crafts
   const handleCraftClick = (craft) => {
-    setSelectedCraft(craft);
-    setIsModalOpen(true);
-    fetchSubCategories(craft.id);
+    navigate('/craft-detail', {
+      state: {
+        categoryId: craft.id,
+        categoryName: craft.cat_name,
+        categoryImage: craft.cat_image
+      }
+    });
   };
 
   // Handle modal close

@@ -100,7 +100,9 @@ const Carousel = () => {
           containerRef.current.style.transition = "none";
           containerRef.current.style.transform = `translateX(0px)`;
           requestAnimationFrame(() => {
-            containerRef.current.style.transition = "transform 1s ease-in-out";
+            if (containerRef.current) {
+              containerRef.current.style.transition = "transform 1s ease-in-out";
+            }
           });
         }
       }, 1000);

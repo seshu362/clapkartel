@@ -27,7 +27,8 @@ import CastingPage from './components/CastingPage';
 import UsersProfile from './components/UsersProfile';
 import DirectorPage from './components/DirectorPage';
 import CraftDetailPage from './components/CraftDetailPage';
-
+import OtherSectionDetailPage from './components/OtherSectionDetailPage';
+import InnerDataPage from './components/InnerDataPage';
 
 
 
@@ -43,7 +44,7 @@ function App() {
   const showHeaderNavCarousel = !authPages.includes(location.pathname) && !embeddedHeaderPages.includes(location.pathname);
 
   // Pages where Carousel should NOT appear (but Header and NavBar should)
-  const noCarouselPages = ['/detailchoreographypage', '/notification', '/wishlist', '/users', '/followers', '/profile', '/profileupate', '/gallery', '/actors', '/actress', '/casting', '/user-profile', '/director', '/craft-detail', '/subcategory-users', '/other-section-content'];
+  const noCarouselPages = ['/detailchoreographypage', '/notification', '/wishlist', '/users', '/followers', '/profile', '/profileupate', '/gallery', '/actors', '/actress', '/casting', '/user-profile', '/director', '/craft-detail', '/subcategory-users', '/other-section-content', '/other-section-detail', '/inner-data'];
 
 
   const showCarousel = showHeaderNavCarousel && !noCarouselPages.includes(location.pathname);
@@ -84,6 +85,8 @@ function App() {
         <Route path='/gallery' element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
         <Route path='/subcategory-users' element={<ProtectedRoute><SubCategoryUsersPage /></ProtectedRoute>} />
         <Route path='/other-section-content' element={<ProtectedRoute><OtherSectionContentPage /></ProtectedRoute>} />
+        <Route path='/other-section-detail' element={<ProtectedRoute><OtherSectionDetailPage /></ProtectedRoute>} />
+        <Route path='/inner-data' element={<ProtectedRoute><InnerDataPage /></ProtectedRoute>} />
 
         <Route path='/user-profile' element={<ProtectedRoute><UsersProfile /></ProtectedRoute>} />
 

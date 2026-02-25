@@ -49,9 +49,9 @@ const CraftPage = () => {
   const handleCraftClick = (craft) => {
     navigate('/craft-detail', {
       state: {
-        craftId: craft.id,
-        craftName: craft.cat_name,
-        craftImage: craft.cat_image
+        categoryId: craft.id,
+        categoryName: craft.cat_name,
+        categoryImage: craft.cat_image
       }
     });
   };

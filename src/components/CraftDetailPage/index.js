@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import Carousel from '../Carousel';
+import VideoCarousel from '../VideoCarousel';
 import './index.css';
 
 const CraftDetailPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Get craft data from navigation state
-    const { craftId, craftName, craftImage } = location.state || {};
-
     // API Configuration
     const BASE_URL = 'https://www.whysocial.in/clap-kartel/public';
     const CRAFT_IMAGE_BASE_URL = 'https://whysocial.in/clap-kartel/public/uploads/cat-list';
 
-    // State for subcategories
-    const [subCategories, setSubCategories] = useState([]);
+    // Get craft category data from navigation state
+    const { categoryId, categoryName, categoryImage } = location.state || {};
+
+    // State management
+    const [subcategories, setSubcategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+
 
     // Helper function to get authorization headers
     const getAuthHeaders = () => {
@@ -26,6 +31,19 @@ const CraftDetailPage = () => {
             'Accept': 'application/json',
             'Authorization': `Bearer ${token}`
         };
+    };
+
+
+
+
+
+    // Helper function to get craft image URL
+    const getCraftImageUrl = (imageName) => {
+        if (!imageName) return null;
+        if (imageName.startsWith('http://') || imageName.startsWith('https://')) {
+            return imageName;
+        }
+        return `${CRAFT_IMAGE_BASE_URL}/${imageName}`;
     };
 
     // Helper function to convert text to title case
@@ -38,168 +56,142 @@ const CraftDetailPage = () => {
             .join(' ');
     };
 
-    // Helper function to construct craft category image URL
-    const getCraftImageUrl = (imageName) => {
-        if (!imageName) return '';
-        if (imageName.startsWith('http://') || imageName.startsWith('https://')) {
-            return imageName;
-        }
-        return `${CRAFT_IMAGE_BASE_URL}/${imageName}`;
-    };
-
-    // Fetch subcategories on component mount
+    // Fetch all data on component mount
     useEffect(() => {
-        const fetchSubCategories = async () => {
-            // Redirect to craft page if no craft data
-            if (!craftId) {
-                navigate('/craft');
-                return;
-            }
+        // Redirect if no category data
+        if (!categoryId || !categoryName) {
+            navigate('/');
+            return;
+        }
 
+        const fetchData = async () => {
             try {
                 setLoading(true);
                 setError(null);
 
-                const response = await fetch(`${BASE_URL}/api/allSubCategoryList/${craftId}`, {
+
+
+
+
+                // Fetch subcategories for this craft
+                const subcategoriesResponse = await fetch(`${BASE_URL}/api/allSubCategoryList/${categoryId}`, {
                     method: 'GET',
                     headers: getAuthHeaders()
                 });
 
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch subcategories: ${response.status}`);
-                }
+                if (subcategoriesResponse.ok) {
+                    const subcategoriesResult = await subcategoriesResponse.json();
 
-                const result = await response.json();
-
-                if (result?.subcategorylist && result.subcategorylist.length > 0) {
-                    setSubCategories(result.subcategorylist);
-                } else {
-                    setSubCategories([]);
+                    if (subcategoriesResult?.subcategorylist && Array.isArray(subcategoriesResult.subcategorylist)) {
+                        setSubcategories(subcategoriesResult.subcategorylist);
+                    } else if (subcategoriesResult?.data && Array.isArray(subcategoriesResult.data)) {
+                        setSubcategories(subcategoriesResult.data);
+                    } else if (Array.isArray(subcategoriesResult)) {
+                        setSubcategories(subcategoriesResult);
+                    }
                 }
 
             } catch (err) {
-                console.error('Error fetching subcategories:', err);
+                console.error('Error fetching data:', err);
                 setError(err.message);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchSubCategories();
-    }, [craftId, navigate]);
-
-    // Handle breadcrumb click to go back to crafts page
-    const handleBreadcrumbClick = () => {
-        navigate('/craft');
-    };
+        fetchData();
+    }, [categoryId, categoryName, navigate]);
 
     // Handle subcategory click
-    const handleSubCategoryClick = (subCategory) => {
+    const handleSubcategoryClick = (subcategory) => {
         navigate('/subcategory-users', {
             state: {
-                subCategoryId: subCategory.id,
-                subCategoryName: subCategory.sub_cat_name,
-                categoryName: craftName,
+                subCategoryId: subcategory.id,
+                subCategoryName: subcategory.sub_cat_name,
+                categoryName: categoryName,
                 sourcePage: '/craft-detail'
             }
         });
     };
 
-    // Loading state
     if (loading) {
         return (
             <div className="craft-detail-page">
-                <div className="craft-detail-loading-container">
-                    <div className="craft-detail-loading-spinner"></div>
-                    <p>Loading subcategories...</p>
-                </div>
-            </div>
-        );
-    }
-
-    // Error state
-    if (error) {
-        return (
-            <div className="craft-detail-page">
-                <div className="craft-detail-error-container">
-                    <p className="craft-detail-error-message">Error: {error}</p>
-                    <button
-                        className="craft-detail-retry-button"
-                        onClick={() => window.location.reload()}
-                    >
-                        Retry
-                    </button>
+                <div className="loading-container">
+                    <div className="loading-spinner"></div>
+                    <p>Loading {categoryName}...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="craft-detail-page">
-            {/* Breadcrumb Navigation */}
-            <div className="craft-detail-breadcrumb-nav">
-                <span
-                    className="craft-detail-breadcrumb-item craft-detail-breadcrumb-link"
-                    onClick={handleBreadcrumbClick}
-                >
-                    24 Crafts
-                </span>
-                <span className="craft-detail-breadcrumb-separator">›</span>
-                <span className="craft-detail-breadcrumb-item craft-detail-breadcrumb-current">
-                    {toTitleCase(craftName)}
-                </span>
+        <div className="craft-detail-page-wrapper">
+            {/* Title with Breadcrumb Navigation */}
+            <div className="craft-breadcrumb-header">
+                <h1 className="craft-page-title">
+                    <div className="breadcrumb-nav">
+                        <span
+                            className="breadcrumb-item breadcrumb-link"
+                            onClick={() => navigate('/')}
+                        >
+                            24 Crafts
+                        </span>
+                        <span className="breadcrumb-separator">→</span>
+                        <span className="breadcrumb-item breadcrumb-current">
+                            {toTitleCase(categoryName)}
+                        </span>
+                    </div>
+                </h1>
             </div>
 
-            {/* Page Title and Icon - Hero Header */}
-            <div className="craft-detail-header">
-                <div className="craft-detail-icon-wrapper">
-                    <img
-                        src={getCraftImageUrl(craftImage)}
-                        alt={craftName}
-                        className="craft-detail-icon"
-                        onError={(e) => {
-                            console.error('Failed to load craft image:', getCraftImageUrl(craftImage));
-                            e.target.src = 'https://placehold.co/100x100?text=No+Image';
-                        }}
-                    />
+            {/* Video Carousel - First Row */}
+            <VideoCarousel />
+
+            {/* Carousel Banner - Second Row */}
+            <Carousel />
+
+            {/* Subcategories Section - Third Row */}
+            <div className="craft-subcategories-container">
+                <div className="craft-subcategories-header">
+                    <h1 className="craft-subcategories-title">{toTitleCase(categoryName)}</h1>
                 </div>
-                <h1 className="craft-detail-title">{toTitleCase(craftName)}</h1>
-            </div>
 
-            {/* Subcategories Section */}
-            <div className="craft-detail-content">
-                {subCategories.length > 0 ? (
-                    <>
-                        <h2 className="craft-detail-section-heading">
-                            All Categories
-                        </h2>
-                        <div className="craft-detail-subcategory-grid">
-                            {subCategories.map((subCategory) => (
-                                <div
-                                    key={subCategory.id}
-                                    className="craft-detail-subcategory-item"
-                                    onClick={() => handleSubCategoryClick(subCategory)}
-                                >
-                                    <div className="craft-detail-subcategory-image-wrapper">
-                                        <img
-                                            src={getCraftImageUrl(craftImage)}
-                                            alt={subCategory.sub_cat_name}
-                                            className="craft-detail-subcategory-image"
-                                            onError={(e) => {
-                                                e.target.src = 'https://placehold.co/80x80?text=No+Image';
-                                            }}
-                                        />
-                                    </div>
-                                    <p className="craft-detail-subcategory-name">
-                                        {toTitleCase(subCategory.sub_cat_name)}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </>
+                {subcategories.length > 0 ? (
+                    <div className="craft-subcategories-grid">
+                        {subcategories.map((subcategory, index) => (
+                            <motion.div
+                                key={subcategory.id || index}
+                                className="craft-subcategory-item"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                whileHover={{ y: -5 }}
+                                onClick={() => handleSubcategoryClick(subcategory)}
+                            >
+                                <img
+                                    src={getCraftImageUrl(subcategory.sub_picture) || getCraftImageUrl(categoryImage)}
+                                    alt={subcategory.sub_cat_name}
+                                    className="craft-subcategory-image"
+                                    onError={(e) => {
+                                        console.error('Failed to load subcategory image:', subcategory.sub_picture);
+                                        // Fallback to category image if subcategory image fails
+                                        if (categoryImage && e.target.src !== getCraftImageUrl(categoryImage)) {
+                                            e.target.src = getCraftImageUrl(categoryImage);
+                                        } else {
+                                            e.target.src = 'https://placehold.co/60x60?text=Icon';
+                                        }
+                                    }}
+                                />
+                                <h1 className="craft-subcategory-name">
+                                    {toTitleCase(subcategory.sub_cat_name)}
+                                </h1>
+                            </motion.div>
+                        ))}
+                    </div>
                 ) : (
-                    <div className="craft-detail-empty-container">
-                        <p className="craft-detail-empty-message">No subcategories available</p>
+                    <div className="no-subcategories">
+                        <p>No subcategories available for {categoryName}</p>
                     </div>
                 )}
             </div>

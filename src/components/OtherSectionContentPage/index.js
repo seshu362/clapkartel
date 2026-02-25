@@ -9,11 +9,24 @@ const OtherSectionContentPage = () => {
     // API Configuration
     const BASE_URL = 'https://www.whysocial.in/clap-kartel/public';
 
-    // Get category data from navigation state
-    const { categoryId, otherId, categoryName } = location.state || {};
+    // Get data from navigation state — supports both old and new navigation format
+    const {
+        categoryId,
+        otherId,
+        categoryName,
+        // New fields from OtherSectionDetailPage / InnerDataPage
+        subcatId,
+        innerdata,
+        serviceName,
+        catName,
+        innerCatName
+    } = location.state || {};
 
-    // Determine which ID to use for API call - prioritize otherId
-    const contentId = otherId || categoryId;
+    // Determine which ID to use for API call — new subcatId takes priority
+    const contentId = subcatId || otherId || categoryId;
+
+    // Build display name for loading/empty states
+    const displayName = innerCatName || catName || categoryName || 'Content';
 
     // State for API data
     const [contentItems, setContentItems] = useState([]);
@@ -122,7 +135,7 @@ const OtherSectionContentPage = () => {
     if (loading) {
         return (
             <div className="content-page">
-                <h1 className="content-title">{categoryName || 'Loading...'}</h1>
+                <h1 className="content-title">{displayName || categoryName || 'Loading...'}</h1>
                 <div className="loading-container">
                     <div className="loading-spinner"></div>
                     <p>Loading content...</p>
@@ -135,7 +148,7 @@ const OtherSectionContentPage = () => {
     if (error) {
         return (
             <div className="content-page">
-                <h1 className="content-title">{categoryName}</h1>
+                <h1 className="content-title">{displayName || categoryName}</h1>
                 <div className="error-container">
                     <p className="error-message">Error: {error}</p>
                     <button
@@ -153,7 +166,7 @@ const OtherSectionContentPage = () => {
     if (contentItems.length === 0) {
         return (
             <div className="content-page">
-                <h1 className="content-title">{categoryName}</h1>
+                <h1 className="content-title">{displayName || categoryName}</h1>
                 <div className="empty-container">
                     <p className="empty-message">No content available in this category</p>
                     <button className="back-button" onClick={() => navigate(-1)}>
@@ -168,20 +181,43 @@ const OtherSectionContentPage = () => {
         <div className="content-page">
             {/* Title with Breadcrumb Navigation */}
             <h1 className="content-title">
-                {categoryName && (
-                    <div className="breadcrumb-nav">
-                        <span
-                            className="breadcrumb-item breadcrumb-link"
-                            onClick={() => navigate('/other-section')}
-                        >
-                            Other Sections
-                        </span>
-                        <span className="breadcrumb-separator">→</span>
-                        <span className="breadcrumb-item breadcrumb-current">
-                            {categoryName}
-                        </span>
-                    </div>
-                )}
+                <div className="breadcrumb-nav">
+                    <span
+                        className="breadcrumb-item breadcrumb-link"
+                        onClick={() => navigate('/other-section')}
+                    >
+                        Other Sections
+                    </span>
+
+                    {serviceName && (
+                        <>
+                            <span className="breadcrumb-separator">→</span>
+                            <span
+                                className="breadcrumb-item breadcrumb-link"
+                                onClick={() => navigate(-2)}
+                            >
+                                {toTitleCase(serviceName)}
+                            </span>
+                        </>
+                    )}
+
+                    {catName && (
+                        <>
+                            <span className="breadcrumb-separator">→</span>
+                            <span
+                                className="breadcrumb-item breadcrumb-link"
+                                onClick={() => navigate(-1)}
+                            >
+                                {toTitleCase(catName)}
+                            </span>
+                        </>
+                    )}
+
+                    <span className="breadcrumb-separator">→</span>
+                    <span className="breadcrumb-item breadcrumb-current">
+                        {toTitleCase(displayName)}
+                    </span>
+                </div>
             </h1>
 
             <div className="content-grid">

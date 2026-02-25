@@ -415,3 +415,17 @@
     transform: rotate(360deg);
   }
 }
+
+/* reCAPTCHA Container Styling */
+#recaptcha-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 78px;
+  width: 100%;
+}
+
+#recaptcha-container>div {
+  margin: 0 auto;
+}

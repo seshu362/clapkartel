@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import VideoCarousel from '../VideoCarousel';
+import Carousel from '../Carousel';
 import './index.css';
 
 const ActorsPage = () => {
@@ -434,177 +436,200 @@ const ActorsPage = () => {
     }
 
     return (
-        <div className="actors-page">
-            {/* Filter Section */}
-            <div className="filter-section">
-                <div className="filter-container">
-                    {/* Country Filter */}
-                    <div className="filter-item">
-                        <div className="search-input-wrapper">
-                            <input
-                                type="text"
-                                className="filter-search-input"
-                                placeholder={loadingCountries ? 'Loading Countries...' : 'Search Country'}
-                                value={countrySearch}
-                                onChange={handleCountrySearchChange}
-                                onFocus={() => setShowCountryDropdown(true)}
-                                disabled={loadingCountries}
-                            />
-                            {showCountryDropdown && filteredCountries.length > 0 && (
-                                <div className="search-dropdown">
-                                    {filteredCountries.map((country) => (
-                                        <div
-                                            key={country.id}
-                                            className="dropdown-item"
-                                            onClick={() => handleCountrySelect(country)}
-                                        >
-                                            {country.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* State Filter */}
-                    <div className="filter-item">
-                        <div className="search-input-wrapper">
-                            <input
-                                type="text"
-                                className="filter-search-input"
-                                placeholder={
-                                    !selectedCountry
-                                        ? 'Select Country First'
-                                        : loadingStates
-                                            ? 'Loading States...'
-                                            : 'Search State'
-                                }
-                                value={stateSearch}
-                                onChange={handleStateSearchChange}
-                                onFocus={() => setShowStateDropdown(true)}
-                                disabled={!selectedCountry || loadingStates}
-                            />
-                            {showStateDropdown && filteredStates.length > 0 && (
-                                <div className="search-dropdown">
-                                    {filteredStates.map((state) => (
-                                        <div
-                                            key={state.id}
-                                            className="dropdown-item"
-                                            onClick={() => handleStateSelect(state)}
-                                        >
-                                            {state.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* City Filter */}
-                    <div className="filter-item">
-                        <div className="search-input-wrapper">
-                            <input
-                                type="text"
-                                className="filter-search-input"
-                                placeholder={
-                                    !selectedState
-                                        ? 'Select State First'
-                                        : loadingCities
-                                            ? 'Loading Cities...'
-                                            : 'Search City'
-                                }
-                                value={citySearch}
-                                onChange={handleCitySearchChange}
-                                onFocus={() => setShowCityDropdown(true)}
-                                disabled={!selectedState || loadingCities}
-                            />
-                            {showCityDropdown && filteredCities.length > 0 && (
-                                <div className="search-dropdown">
-                                    {filteredCities.map((city) => (
-                                        <div
-                                            key={city.id}
-                                            className="dropdown-item"
-                                            onClick={() => handleCitySelect(city)}
-                                        >
-                                            {city.name}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Apply Filters Button */}
-                    {(selectedCountry || selectedState || selectedCity) && (
-                        <button
-                            className="apply-filters-btn"
-                            onClick={handleApplyFilters}
-                        >
-                            Apply Filters
-                        </button>
-                    )}
-
-                    {/* Clear Filters Button */}
-                    {(selectedCountry || selectedState || selectedCity) && (
-                        <button
-                            className="clear-filters-btn"
-                            onClick={handleClearFilters}
-                        >
-                            Clear Filters
-                        </button>
-                    )}
+        <>
+            {/* Breadcrumb Navigation */}
+            <div className="breadcrumb-container">
+                <div className="breadcrumb-nav">
+                    <span className="breadcrumb-item breadcrumb-link" onClick={() => navigate('/')}>
+                        Home
+                    </span>
+                    <span className="breadcrumb-separator">→</span>
+                    <span className="breadcrumb-item breadcrumb-current">
+                        Actors
+                    </span>
                 </div>
             </div>
 
-            {/* Title and Description */}
-            <h1 className="actors-title">{pageInfo.name}</h1>
+            {/* Video Carousel - Full Width */}
+            <VideoCarousel />
 
-            {pageInfo.description && (
-                <p className="actors-description">{pageInfo.description}</p>
-            )}
+            {/* Carousel Banner - Full Width */}
+            <Carousel />
 
-            {/* Actors Grid */}
-            {filteredUsers.length === 0 ? (
-                <div className="empty-container">
-                    <p className="empty-message">
-                        {selectedCountry || selectedState || selectedCity
-                            ? 'No actors found matching the selected filters'
-                            : 'No actors found'}
-                    </p>
-                </div>
-            ) : (
-                <div className="actors-grid">
-                    {filteredUsers.map((user) => {
-                        const userImgSrc = getUserProfileImageUrl(user.userProfileImage);
-
-                        return (
-                            <div
-                                key={user.userId}
-                                className="actor-item"
-                                onClick={() => handleUserClick(user)}
-                                style={{ cursor: 'pointer' }}
-                            >
-                                <div className="actor-image-wrapper">
-                                    <img
-                                        src={userImgSrc}
-                                        alt={user.userName}
-                                        className="actor-image"
-                                        onError={(e) => {
-                                            console.error('Failed to load actor image:', userImgSrc);
-                                            e.target.src = 'https://placehold.co/120x120?text=No+Image';
-                                        }}
-                                    />
-                                </div>
-                                <div className="actor-info">
-                                    <p className="actor-name">{toTitleCase(user.userName)}</p>
-                                </div>
+            {/* Filters and Actors - Constrained Width */}
+            <div className="actors-page">
+                {/* Filter Section */}
+                <div className="filter-section">
+                    <div className="filter-container">
+                        {/* Country Filter */}
+                        <div className="filter-item">
+                            <div className="search-input-wrapper">
+                                <input
+                                    type="text"
+                                    className="filter-search-input"
+                                    placeholder={loadingCountries ? 'Loading Countries...' : 'Search Country'}
+                                    value={countrySearch}
+                                    onChange={handleCountrySearchChange}
+                                    onFocus={() => setShowCountryDropdown(true)}
+                                    disabled={loadingCountries}
+                                />
+                                {showCountryDropdown && filteredCountries.length > 0 && (
+                                    <div className="search-dropdown">
+                                        {filteredCountries.map((country) => (
+                                            <div
+                                                key={country.id}
+                                                className="dropdown-item"
+                                                onClick={() => handleCountrySelect(country)}
+                                            >
+                                                {country.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        );
-                    })}
+                        </div>
+
+                        {/* State Filter */}
+                        <div className="filter-item">
+                            <div className="search-input-wrapper">
+                                <input
+                                    type="text"
+                                    className="filter-search-input"
+                                    placeholder={
+                                        !selectedCountry
+                                            ? 'Select Country First'
+                                            : loadingStates
+                                                ? 'Loading States...'
+                                                : 'Search State'
+                                    }
+                                    value={stateSearch}
+                                    onChange={handleStateSearchChange}
+                                    onFocus={() => setShowStateDropdown(true)}
+                                    disabled={!selectedCountry || loadingStates}
+                                />
+                                {showStateDropdown && filteredStates.length > 0 && (
+                                    <div className="search-dropdown">
+                                        {filteredStates.map((state) => (
+                                            <div
+                                                key={state.id}
+                                                className="dropdown-item"
+                                                onClick={() => handleStateSelect(state)}
+                                            >
+                                                {state.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* City Filter */}
+                        <div className="filter-item">
+                            <div className="search-input-wrapper">
+                                <input
+                                    type="text"
+                                    className="filter-search-input"
+                                    placeholder={
+                                        !selectedState
+                                            ? 'Select State First'
+                                            : loadingCities
+                                                ? 'Loading Cities...'
+                                                : 'Search City'
+                                    }
+                                    value={citySearch}
+                                    onChange={handleCitySearchChange}
+                                    onFocus={() => setShowCityDropdown(true)}
+                                    disabled={!selectedState || loadingCities}
+                                />
+                                {showCityDropdown && filteredCities.length > 0 && (
+                                    <div className="search-dropdown">
+                                        {filteredCities.map((city) => (
+                                            <div
+                                                key={city.id}
+                                                className="dropdown-item"
+                                                onClick={() => handleCitySelect(city)}
+                                            >
+                                                {city.name}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Apply Filters Button */}
+                        {(selectedCountry || selectedState || selectedCity) && (
+                            <button
+                                className="apply-filters-btn"
+                                onClick={handleApplyFilters}
+                            >
+                                Apply Filters
+                            </button>
+                        )}
+
+                        {/* Clear Filters Button */}
+                        {(selectedCountry || selectedState || selectedCity) && (
+                            <button
+                                className="clear-filters-btn"
+                                onClick={handleClearFilters}
+                            >
+                                Clear Filters
+                            </button>
+                        )}
+                    </div>
                 </div>
-            )}
-        </div>
+
+                {/* Title and Description */}
+                <h1 className="actors-title">{pageInfo.name}</h1>
+
+                {pageInfo.description && (
+                    <p className="actors-description">{pageInfo.description}</p>
+                )}
+
+                {/* Actors Grid */}
+                {filteredUsers.length === 0 ? (
+                    <div className="empty-container">
+                        <p className="empty-message">
+                            {selectedCountry || selectedState || selectedCity
+                                ? 'No actors found matching the selected filters'
+                                : 'No actors found'}
+                        </p>
+                    </div>
+                ) : (
+                    <div className="actors-grid">
+                        {filteredUsers.map((user) => {
+                            const userImgSrc = getUserProfileImageUrl(user.userProfileImage);
+
+                            return (
+                                <div
+                                    key={user.userId}
+                                    className="actor-item"
+                                    onClick={() => handleUserClick(user)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <div className="actor-image-wrapper">
+                                        <img
+                                            src={userImgSrc}
+                                            alt={user.userName}
+                                            className="actor-image"
+                                            onError={(e) => {
+                                                console.error('Failed to load actor image:', userImgSrc);
+                                                e.target.src = 'https://placehold.co/120x120?text=No+Image';
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="actor-info">
+                                        <p className="actor-name">{toTitleCase(user.userName)}</p>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+        </>
     );
 };
+
 
 export default ActorsPage;

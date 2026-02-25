@@ -23,6 +23,7 @@ const Signup = () => {
     const [settingUpRecaptcha, setSettingUpRecaptcha] = useState(false);
     const navigate = useNavigate();
 
+    // Initialize reCAPTCHA - Force v2 to avoid Enterprise errors
     const setupRecaptcha = async () => {
         if (settingUpRecaptcha) {
             console.log('reCAPTCHA setup already in progress, waiting...');
@@ -55,9 +56,9 @@ const Signup = () => {
             await new Promise(resolve => setTimeout(resolve, 100));
 
             window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                size: window.__USE_VISIBLE_RECAPTCHA__ ? 'normal' : 'invisible',
+                size: 'invisible', // Use invisible for better UX
                 callback: (token) => {
-                    console.log('reCAPTCHA resolved', token ? token.substring(0, 8) + '...' : '');
+                    console.log('reCAPTCHA v2 resolved successfully', token ? token.substring(0, 8) + '...' : '');
                 },
                 'expired-callback': () => {
                     try {
@@ -67,8 +68,14 @@ const Signup = () => {
                     } catch (_) { }
                     window.recaptchaVerifier = null;
                     console.warn('reCAPTCHA expired');
+                    setError('reCAPTCHA expired. Please try again.');
+                },
+                'error-callback': () => {
+                    console.log('reCAPTCHA error');
+                    setError('reCAPTCHA verification failed. Please try again.');
                 }
             });
+            console.log('reCAPTCHA v2 verifier created successfully');
             return window.recaptchaVerifier;
         } catch (error) {
             console.error('reCAPTCHA setup error:', error);
@@ -82,9 +89,9 @@ const Signup = () => {
                     }
                     await new Promise(resolve => setTimeout(resolve, 200));
                     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                        size: window.__USE_VISIBLE_RECAPTCHA__ ? 'normal' : 'invisible',
+                        size: 'invisible',
                         callback: (token) => {
-                            console.log('reCAPTCHA resolved (retry)', token ? token.substring(0, 8) + '...' : '');
+                            console.log('reCAPTCHA v2 resolved (retry)', token ? token.substring(0, 8) + '...' : '');
                         },
                         'expired-callback': () => {
                             try {
@@ -94,6 +101,10 @@ const Signup = () => {
                             } catch (_) { }
                             window.recaptchaVerifier = null;
                             console.warn('reCAPTCHA expired (retry)');
+                        },
+                        'error-callback': () => {
+                            console.log('reCAPTCHA error (retry)');
+                            setError('reCAPTCHA verification failed. Please try again.');
                         }
                     });
                     return window.recaptchaVerifier;

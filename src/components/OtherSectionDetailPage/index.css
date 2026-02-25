@@ -1,0 +1,309 @@
+/* Import Sen font - matching app design system */
+@import url("https://fonts.googleapis.com/css2?family=Sen:wght@400;500;700;800&display=swap");
+
+/* ============================================ */
+/* PAGE WRAPPER */
+/* ============================================ */
+
+.osd-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 2rem;
+}
+
+/* ============================================ */
+/* LOADING STATE */
+/* ============================================ */
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1rem;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(191, 137, 6, 0.2);
+    border-top-color: #bf8906;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-container p {
+    color: #bf8906;
+    font-size: 1.2rem;
+    font-family: 'Sen', sans-serif;
+}
+
+/* ============================================ */
+/* BREADCRUMB NAVIGATION */
+/* ============================================ */
+
+.osd-breadcrumb-header {
+    width: 90%;
+    max-width: 1600px;
+    margin: 2rem auto 1.5rem auto;
+    padding-top: 1rem;
+}
+
+.osd-page-title {
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: "Sen", sans-serif;
+    flex-wrap: wrap;
+}
+
+.breadcrumb-item {
+    font-size: 26px;
+    font-weight: 500;
+    color: #888;
+}
+
+.breadcrumb-link {
+    color: #BF8906;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+    text-decoration: underline;
+    color: #a07705;
+}
+
+.breadcrumb-separator {
+    color: #BF8906;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.breadcrumb-current {
+    color: #555;
+    font-weight: 600;
+}
+
+/* ============================================ */
+/* CATEGORIES CONTAINER - LIST STYLE */
+/* ============================================ */
+
+.osd-categories-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1600px;
+    gap: 1rem;
+    min-height: 210px;
+    height: auto;
+    border-radius: 34.76px;
+    border: 3.476px solid #e5e5e5;
+    background-color: #fbfbfb;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.osd-categories-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+.osd-categories-title {
+    color: #bf8906;
+    font-family: "Sen", sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0;
+}
+
+/* ============================================ */
+/* LIST ITEMS */
+/* ============================================ */
+
+.osd-list-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.osd-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.osd-list-item:last-child {
+    border-bottom: none;
+}
+
+.osd-list-item:hover {
+    background-color: #fdf6e3;
+}
+
+.osd-list-item-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.osd-list-item-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.osd-list-item-name {
+    font-family: "Sen", sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: 0.02em;
+}
+
+.osd-list-item-arrow {
+    font-size: 22px;
+    font-weight: 600;
+    color: #bf8906;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* No Categories */
+.osd-no-categories {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    color: #666;
+    font-family: "Sen", sans-serif;
+    font-size: 18px;
+}
+
+/* ============================================ */
+/* RESPONSIVE DESIGN */
+/* ============================================ */
+
+@media screen and (max-width: 1024px) {
+    .osd-categories-container {
+        width: calc(100% - 60px);
+    }
+
+    .osd-categories-title {
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .osd-breadcrumb-header {
+        width: calc(100% - 40px);
+        margin: 1.5rem auto 1rem auto;
+    }
+
+    .breadcrumb-item,
+    .breadcrumb-separator {
+        font-size: 20px;
+    }
+
+    .osd-categories-container {
+        width: calc(100% - 40px);
+        border-radius: 20px;
+        padding: 1rem;
+    }
+
+    .osd-categories-title {
+        font-size: 24px;
+    }
+
+    .osd-list-item {
+        padding: 14px 16px;
+    }
+
+    .osd-list-item-name {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .osd-breadcrumb-header {
+        width: calc(100% - 30px);
+    }
+
+    .breadcrumb-item,
+    .breadcrumb-separator {
+        font-size: 17px;
+    }
+
+    .osd-categories-container {
+        width: calc(100% - 30px);
+        border-radius: 15px;
+    }
+
+    .osd-categories-title {
+        font-size: 20px;
+    }
+
+    .osd-list-item {
+        padding: 12px 14px;
+    }
+
+    .osd-list-item-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        min-height: 34px;
+    }
+
+    .osd-list-item-name {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .osd-categories-container {
+        width: calc(100% - 20px);
+        border-radius: 12px;
+        border: 2px solid #e5e5e5;
+    }
+
+    .osd-categories-title {
+        font-size: 18px;
+    }
+
+    .osd-list-item-name {
+        font-size: 13px;
+    }
+}
